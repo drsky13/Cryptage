@@ -191,12 +191,12 @@ void decrypteSansCle ()
           test=0;
         }
         else if(!(phrase[c]<'a' || phrase[c]>'z')){
-          diff='z'-phrase[c];
+          diff=phrase[c]-'a';
           if (diff-i>=0){
-              copiePhrase[c]=phrase[c]+i;
+              copiePhrase[c]=phrase[c]-i;
           }
           else{
-            copiePhrase[c]='a'+(i-diff)+1;
+            copiePhrase[c]='z'-(i-diff)+1;
           }
         }
         c++;
@@ -209,8 +209,10 @@ void decrypteSansCle ()
       printf("\n--------------------------\n");
       printf("le message vous semble être le bon (oui/non) ->");
       scanf("%s", trouve);
-      if(strcmp(trouve, "oui")==0)
+      if(strcmp(trouve, "oui")==0){
+        printf("la cle est %d", i);
         i=25;
+      }
 
   }
 }
