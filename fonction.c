@@ -159,14 +159,59 @@ void cryptePhrase ()
 
 void decrypteSansCle ()
 {
-  int i, longueur;
+  int i=1, i2, c, longueur, test=1, diff;
+  char trouve[4]="non";
   char* phrase=NULL;
+  char* copiePhrase=NULL;
   printf("quel taille fait le message à decrypter ?");
   scanf("%d", &longueur);
   longueur++;
-  if(taille>0)
+  if(longueur>0)
   {
-    phrase = malloc(longueur*sizeof(char))
+    phrase = malloc(longueur*sizeof(char));
+    copiePhrase = malloc(longueur*sizeof(char));
+    if (phrase==NULL || copiePhrase==NULL)
+    {
+      printf("erreur de l'allocation");
+      exit(0);
+    }
+    purge();
+    printf("rentrer votre phrase : ");
+    if (!lirePhrase(phrase, longueur))
+    {
+      printf("erreur de lecture de la phrase");
+    }
+  }
+    for(i=1 ; i<25 ; i++){
+      c=0;
+      test=1;
+      while(c<=longueur && test)
+      {
+        if(phrase[c]=='\0'){
+          test=0;
+        }
+        else if(!(phrase[c]<'a' || phrase[c]>'z')){
+          diff='z'-phrase[c];
+          if (diff-i>=0){
+              copiePhrase[c]=phrase[c]+i;
+          }
+          else{
+            copiePhrase[c]='a'+(i-diff)+1;
+          }
+        }
+        c++;
+      }
+      printf("\n-----MESSAGE DECRYPTE-----\n");
+      for (i2=0 ; i2<longueur ; i2++)
+      {
+        printf("%c", copiePhrase[i2]);
+      }
+      printf("\n--------------------------\n");
+      printf("le message vous semble être le bon (oui/non) ->");
+      scanf("%s", trouve);
+      if(strcmp(trouve, "oui")==0)
+        i=25;
+
   }
 }
 

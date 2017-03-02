@@ -17,6 +17,9 @@ int main ()
       case 2:
         decryptageCle();
         break;
+      case 3:
+        decrypteSansCle();
+        break;
       default :
         break;
     }
