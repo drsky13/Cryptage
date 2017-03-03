@@ -20,6 +20,9 @@ int main ()
       case 3:
         decrypteSansCle();
         break;
+      case 4:
+        cryptageVegenere();
+        break;
       default :
         break;
     }

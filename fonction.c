@@ -215,17 +215,80 @@ void decrypteSansCle ()
       }
 
   }
+  free(phrase);
+  free(copiePhrase);
 }
+char tableauVegenere(int lig, int col)
+{
+  int l,c;
+  char tab[26][26];
+  for (l=0 ; l<26 ; l++)
+  {
+    for (c=0 ; c<26 ; c++)
+    {
+      tab[l][c]='a'+(l+c)%26;
+      //printf("%c", tab[l][c]);
+    }
+    //printf("\n");
+  }
+  return tab[lig][col];
+}
+void cryptageVegenere ()
+{
+  int taille, i;
+  char *message=NULL;
+  char *cle=NULL;
+  char *passphrase=NULL;
 
+  printf("quel taille fait votre message : ");
+  scanf("%d", &taille);
+  if (taille>0)
+  {
+    message=malloc(taille*sizeof(char));
+    cle=malloc(taille*sizeof(char));
+    passphrase=malloc(taille*sizeof(char));
+    if (cle==NULL || message==NULL || passphrase==NULL)
+      printf("erreur durant l'allocation");
+
+    purge();
+    printf("message à crypter : ");
+    if(!lirePhrase(message, taille))
+    {
+      printf("erreur");
+    }
+    printf("rentrer votre clé (de taille egal ou inférieur à votre message)");
+    if(!lirePhrase(cle, taille)){
+      printf("erreur");
+    }
+    strcat(passphrase, cle);
+    if(strlen(message)!=strlen(passphrase)){
+      while(strlen(message)-strlen(passphrase)>strlen(cle)){
+        strcat(passphrase, cle);
+      }
+      strncat(passphrase, cle, strlen(message)-strlen(passphrase));
+    }
+    for(i=0 ; i<taille ; i++)
+    {
+      printf("%c", message[i]);
+    }
+    printf("\n");
+    for(i=0 ; i<taille ; i++)
+    {
+      printf("%c", passphrase[i]);
+    }
+  }
+
+}
 
 int menu ()
 {
   int choix, test=1;
   do {
     printf("\nbonjour, bienvenu dans ce programme de cryptage. vous souhaitez : \n1 : crypter un message\n");
-    printf("2 : decrypter un message avec une cle\n3 : decrypter un message sans cle\n0 : quitter\n--> ");
+    printf("2 : decrypter un message avec une cle\n3 : decrypter un message sans cle\n");
+    printf("----------- Vegenère ----------\n4 : cyptage\n5 : decryptage\n0 : quitter\n--> ");
     scanf("%d", &choix);
-    if ((choix<0)||(choix>3))
+    if ((choix<0)||(choix>5))
     {
       printf("ce choix n'existe pas");
       test=0;
