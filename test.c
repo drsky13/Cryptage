@@ -23,6 +23,9 @@ int main ()
       case 4:
         cryptageVegenere();
         break;
+      case 5:
+        decryptageVegenere();
+        break;
       default :
         break;
     }

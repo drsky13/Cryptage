@@ -8,6 +8,8 @@ void decryptageCle ();
 void decrypteSansCle ();
 char tableauVegenere();
 void cryptageVegenere ();
+void decryptageVegenere();
+
 int menu ();
 
 #endif

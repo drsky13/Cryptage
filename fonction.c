@@ -235,10 +235,11 @@ char tableauVegenere(int lig, int col)
 }
 void cryptageVegenere ()
 {
-  int taille, i;
+  int taille, i, test=1;
   char *message=NULL;
   char *cle=NULL;
   char *passphrase=NULL;
+  char *messageCrypte=NULL;
 
   printf("quel taille fait votre message : ");
   scanf("%d", &taille);
@@ -247,6 +248,7 @@ void cryptageVegenere ()
     message=malloc(taille*sizeof(char));
     cle=malloc(taille*sizeof(char));
     passphrase=malloc(taille*sizeof(char));
+    messageCrypte=malloc(taille*sizeof(char));
     if (cle==NULL || message==NULL || passphrase==NULL)
       printf("erreur durant l'allocation");
 
@@ -267,9 +269,18 @@ void cryptageVegenere ()
       }
       strncat(passphrase, cle, strlen(message)-strlen(passphrase));
     }
+
+    for (i=0 ; i<taille && test ; i++)
+    {
+      if (message[i]=='\0'){
+        test=0;
+      }
+      messageCrypte[i]=tableauVegenere(25-('z'-passphrase[i]), 25-('z'-message[i]));
+    }
+
     for(i=0 ; i<taille ; i++)
     {
-      printf("%c", message[i]);
+      printf("%c", messageCrypte[i]);
     }
     printf("\n");
     for(i=0 ; i<taille ; i++)
@@ -278,6 +289,70 @@ void cryptageVegenere ()
     }
   }
 
+}
+
+void decryptageVegenere()
+{
+  int taille, i, j, test=1;
+  char *message=NULL;
+  char *cle=NULL;
+  char *passphrase=NULL;
+  char *messageCrypte=NULL;
+
+  printf("quel taille fait votre message : ");
+  scanf("%d", &taille);
+  if (taille>0)
+  {
+    message=malloc(taille*sizeof(char));
+    cle=malloc(taille*sizeof(char));
+    passphrase=malloc(taille*sizeof(char));
+    messageCrypte=malloc(taille*sizeof(char));
+    if (cle==NULL || message==NULL || passphrase==NULL)
+      printf("erreur durant l'allocation");
+
+    purge();
+    printf("message à crypter : ");
+    if(!lirePhrase(message, taille))
+    {
+      printf("erreur");
+    }
+    printf("rentrer votre clé (de taille egal ou inférieur à votre message)");
+    if(!lirePhrase(cle, taille)){
+      printf("erreur");
+    }
+    strcat(passphrase, cle);
+    if(strlen(message)!=strlen(passphrase)){
+      while(strlen(message)-strlen(passphrase)>strlen(cle)){
+        strcat(passphrase, cle);
+      }
+      strncat(passphrase, cle, strlen(message)-strlen(passphrase));
+    }
+
+    for (i=0 ; i<taille && test ; i++)
+    {
+      if (message[i]=='\0'){
+        test=0;
+      }
+      else{
+      for(j=0 ; j<26 ; j++){
+        if(tableauVegenere(25-('z'-passphrase[i]), j)==message[i]){
+          messageCrypte[i]=tableauVegenere(0, j);
+        }
+      }
+    }
+      //messageCrypte[i]=tableauVegenere(25-('z'-passphrase[i]), 25-('z'-message[i]));
+    }
+
+    for(i=0 ; i<taille ; i++)
+    {
+      printf("%c", messageCrypte[i]);
+    }
+    printf("\n");
+    for(i=0 ; i<taille ; i++)
+    {
+      printf("%c", passphrase[i]);
+    }
+  }
 }
 
 int menu ()
