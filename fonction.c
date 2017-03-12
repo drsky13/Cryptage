@@ -258,7 +258,7 @@ void cryptageVegenere ()
     {
       printf("erreur");
     }
-    printf("rentrer votre clé (de taille egal ou inférieur à votre message)");
+    printf("rentrer votre clé (de taille egal ou inférieur à votre message) : ");
     if(!lirePhrase(cle, taille)){
       printf("erreur");
     }
@@ -275,18 +275,23 @@ void cryptageVegenere ()
       if (message[i]=='\0'){
         test=0;
       }
-      messageCrypte[i]=tableauVegenere(25-('z'-passphrase[i]), 25-('z'-message[i]));
+      else if (message[i] == ' '){
+        messageCrypte[i]=' ';
+      }
+      else{
+        messageCrypte[i]=tableauVegenere(25-('z'-passphrase[i]), 25-('z'-message[i]));
+      }
     }
-
+    printf("\n-----MESSAGE DECRYPTE-----\n");
     for(i=0 ; i<taille ; i++)
     {
       printf("%c", messageCrypte[i]);
     }
-    printf("\n");
-    for(i=0 ; i<taille ; i++)
+    printf("\n--------------------------\n");
+    /*for(i=0 ; i<taille ; i++)
     {
       printf("%c", passphrase[i]);
-    }
+    }*/
   }
 
 }
@@ -333,20 +338,24 @@ void decryptageVegenere()
       if (message[i]=='\0'){
         test=0;
       }
+      else if (message[i]==' '){
+        messageCrypte[i]=' ';
+      }
       else{
-      for(j=0 ; j<26 ; j++){
-        if(tableauVegenere(25-('z'-passphrase[i]), j)==message[i]){
-          messageCrypte[i]=tableauVegenere(0, j);
+        for(j=0 ; j<26 ; j++){
+          if(tableauVegenere(25-('z'-passphrase[i]), j)==message[i]){
+            messageCrypte[i]=tableauVegenere(0, j);
+          }
         }
       }
     }
-      //messageCrypte[i]=tableauVegenere(25-('z'-passphrase[i]), 25-('z'-message[i]));
-    }
-
+    printf("\n-----MESSAGE DECRYPTE-----\n");
     for(i=0 ; i<taille ; i++)
     {
       printf("%c", messageCrypte[i]);
     }
+    printf("\n--------------------------\n");
+
     printf("\n");
     for(i=0 ; i<taille ; i++)
     {
