@@ -364,6 +364,31 @@ void decryptageVegenere()
   }
 }
 
+void initTableauFrequence (int tableau[2][26])
+{
+  int i;
+  for (i=0 ; i<26 ; i++){
+    tableau[0][i]='a'+i;
+    tableau[1][i]=0;
+  }
+}
+void analyseFrequentiel ()
+{
+  char *message=NULL;
+  int tableau[2][26];
+  int i, taille;
+  initTableauFrequence(tableau);
+  printf("quel taille fait votre message : ");
+  scanf("%d", &taille);
+  message=malloc(taille*sizeof(char));
+  if(message == NULL){
+    printf("erreur lors de l'allocation\n");
+  }
+  if(!lirePhrase(message, taille)){
+    printf("erreur lors de la lecture");
+  }
+}
+
 int menu ()
 {
   int choix, test=1;
