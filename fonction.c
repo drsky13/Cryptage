@@ -227,9 +227,7 @@ char tableauVegenere(int lig, int col)
     for (c=0 ; c<26 ; c++)
     {
       tab[l][c]='a'+(l+c)%26;
-      //printf("%c", tab[l][c]);
     }
-    //printf("\n");
   }
   return tab[lig][col];
 }
@@ -376,7 +374,8 @@ void analyseFrequentiel ()
 {
   char *message=NULL;
   int tableau[2][26];
-  int i, taille;
+  int i, j, taille;
+  float pourcentage[26]={0.0}, tailleF;
   initTableauFrequence(tableau);
   printf("quel taille fait votre message : ");
   scanf("%d", &taille);
@@ -384,9 +383,29 @@ void analyseFrequentiel ()
   if(message == NULL){
     printf("erreur lors de l'allocation\n");
   }
+  purge();
   if(!lirePhrase(message, taille)){
     printf("erreur lors de la lecture");
   }
+  taille=strlen(message);
+  for(i=0 ; i<taille ; i++){
+    for(j=0 ; j<26 ; j++){
+      if(message[i]==tableau[0][j]){
+        tableau[1][j]+=1;
+        printf("%c - %d\n", tableau[0][j], tableau[1][j]);
+        j=26;
+      }
+    }
+  }
+  tailleF=taille;
+  for (j=0 ; j<26 ; j++){
+    pourcentage[j]=(tableau[1][j]/tailleF)*100;
+    printf("%c - %lf\n", tableau[0][j], pourcentage[j]);
+  }
+
+
+
+
 }
 
 int menu ()
@@ -395,9 +414,9 @@ int menu ()
   do {
     printf("\nbonjour, bienvenu dans ce programme de cryptage. vous souhaitez : \n1 : crypter un message\n");
     printf("2 : decrypter un message avec une cle\n3 : decrypter un message sans cle\n");
-    printf("----------- Vegenère ----------\n4 : cyptage\n5 : decryptage\n0 : quitter\n--> ");
+    printf("----------- Vegenère ----------\n4 : cyptage\n5 : decryptage\n6 : analyse fréquentielle\n0 : quitter\n--> ");
     scanf("%d", &choix);
-    if ((choix<0)||(choix>5))
+    if ((choix<0)||(choix>6))
     {
       printf("ce choix n'existe pas");
       test=0;

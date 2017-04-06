@@ -9,6 +9,9 @@ void decrypteSansCle ();
 char tableauVegenere();
 void cryptageVegenere ();
 void decryptageVegenere();
+void initTableauFrequence (int tableau[2][26]);
+void analyseFrequentiel ();
+
 
 int menu ();
 

@@ -26,6 +26,9 @@ int main ()
       case 5:
         decryptageVegenere();
         break;
+      case 6:
+        analyseFrequentiel();
+        break;
       default :
         break;
     }
